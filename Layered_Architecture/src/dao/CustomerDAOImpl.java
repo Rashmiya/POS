@@ -42,25 +42,25 @@ public class CustomerDAOImpl {
         return  pstm.executeUpdate() > 0;
     }
 
-    public void exitCustomer() throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
-        pstm.setString(1, id);
-        return pstm.executeQuery().next();
-    }
-
-    public void deleteCustomer() throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
-        pstm.setString(1, id);
-        pstm.executeUpdate();
-
-    }
-
-    public void generateID(){
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        ResultSet rst = connection.createStatement().executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
-
-    }
+//    public void exitCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException {
+//        Connection connection = DBConnection.getDbConnection().getConnection();
+//        PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
+//        pstm.setString(1, dto.getId());
+//        return pstm.executeQuery().next() ;
+//    }
+//
+//    public void deleteCustomer() throws SQLException, ClassNotFoundException {
+//        Connection connection = DBConnection.getDbConnection().getConnection();
+//        PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
+//        pstm.setString(1, id);
+//        pstm.executeUpdate();
+//
+//    }
+//
+//    public void generateID(){
+//        Connection connection = DBConnection.getDbConnection().getConnection();
+//        ResultSet rst = connection.createStatement().executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
+//
+//    }
 
 }
