@@ -48,19 +48,4 @@ public class CustomerDAOImpl {
         pstm.setString(1, id);
         return pstm.executeQuery().next();
     }
-//
-//    public void deleteCustomer() throws SQLException, ClassNotFoundException {
-//        Connection connection = DBConnection.getDbConnection().getConnection();
-//        PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
-//        pstm.setString(1, id);
-//        pstm.executeUpdate();
-//
-//    }
-//
-//    public void generateID(){
-//        Connection connection = DBConnection.getDbConnection().getConnection();
-//        ResultSet rst = connection.createStatement().executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
-//
-//    }
-
 }
