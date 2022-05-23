@@ -147,6 +147,7 @@ public class ManageCustomersFormController {
                 if (existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, id + " already exists").show();
                 }
+
                 CustomerDAOImpl customerDAO = new CustomerDAOImpl();
                 customerDAO.saveCustomer(new CustomerDTO(id,name,address));
 
@@ -162,6 +163,7 @@ public class ManageCustomersFormController {
                 if (!existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
+
                 CustomerDAOImpl customerDAO = new CustomerDAOImpl();
                 customerDAO.updateCustomer(new CustomerDTO(id,name,address));
 
@@ -182,10 +184,8 @@ public class ManageCustomersFormController {
 
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-//        Connection connection = DBConnection.getDbConnection().getConnection();
-//        PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
-//        pstm.setString(1, id);
-//        return pstm.executeQuery().next();
+        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+        return  customerDAO.exitCustomer(id);
     }
 
 
@@ -214,8 +214,8 @@ public class ManageCustomersFormController {
 
     private String generateNewId() {
         try {
-//            Connection connection = DBConnection.getDbConnection().getConnection();
-//            ResultSet rst = connection.createStatement().executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
+            Connection connection = DBConnection.getDbConnection().getConnection();
+            ResultSet rst = connection.createStatement().executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
             if (rst.next()) {
                 String id = rst.getString("id");
                 int newCustomerId = Integer.parseInt(id.replace("C00-", "")) + 1;
