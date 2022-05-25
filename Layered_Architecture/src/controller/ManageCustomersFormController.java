@@ -41,6 +41,8 @@ public class ManageCustomersFormController {
     public JFXTextField txtCustomerAddress;
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
+//    Property Injection
+    private CrudDAO crudDAO= new CustomerDAOImpl();
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -73,9 +75,6 @@ public class ManageCustomersFormController {
         tblCustomers.getItems().clear();
         /*Get all customers*/
         try {
-            // tight coupling
-            // No Dependency Injection
-            CrudDAO crudDAO= new CustomerDAOImpl();
             ArrayList<CustomerDTO> allCustomers = crudDAO.getAllCustomers();
 
             for (CustomerDTO customer: allCustomers
@@ -150,11 +149,6 @@ public class ManageCustomersFormController {
                 if (existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, id + " already exists").show();
                 }
-                    // tight coupling
-                    // Dependency Injection
-                    // Boilerplate codes
-
-                CrudDAO crudDAO = new CustomerDAOImpl();
                 crudDAO.saveCustomer(new CustomerDTO(id,name,address));
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
@@ -169,10 +163,6 @@ public class ManageCustomersFormController {
                 if (!existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
-                // tight coupling
-                // Dependency Injection
-                // Boilerplate codes
-                CrudDAO  crudDAO = new CustomerDAOImpl();
                 crudDAO.updateCustomer(new CustomerDTO(id,name,address));
 
             } catch (SQLException e) {
@@ -180,22 +170,16 @@ public class ManageCustomersFormController {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
             CustomerTM selectedCustomer = tblCustomers.getSelectionModel().getSelectedItem();
             selectedCustomer.setName(name);
             selectedCustomer.setAddress(address);
             tblCustomers.refresh();
         }
-
         btnAddNewCustomer.fire();
     }
 
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        // tight coupling
-        // Dependency Injection
-        // Boilerplate codes
-        CrudDAO crudDAO = new CustomerDAOImpl();
         return crudDAO.exitCustomer(id);
     }
 
@@ -207,16 +191,11 @@ public class ManageCustomersFormController {
             if (!existCustomer(id)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
             }
-            // tight coupling
-            // Dependency Injection
-            // Boilerplate codes
-            CrudDAO crudDAO = new CustomerDAOImpl();
             crudDAO.deleteCustomer(id);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
             tblCustomers.getSelectionModel().clearSelection();
             initUI();
-
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to delete the customer " + id).show();
         } catch (ClassNotFoundException e) {
@@ -226,10 +205,6 @@ public class ManageCustomersFormController {
 
     private String generateNewId() {
         try {
-            // tight coupling
-            // Dependency Injection
-            // Boilerplate codes
-            CrudDAO  crudDAO = new CustomerDAOImpl();
             return  crudDAO.generateNewId();
 
         } catch (SQLException e) {
