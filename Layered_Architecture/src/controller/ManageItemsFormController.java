@@ -206,8 +206,6 @@ public class ManageItemsFormController {
 
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        ItemDAO itemDAO = new ItemDAOImpl();
-        
          return itemDAO.exitItem(code);
     }
 
