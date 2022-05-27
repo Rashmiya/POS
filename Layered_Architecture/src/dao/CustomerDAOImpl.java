@@ -1,6 +1,4 @@
 package dao;
-
-import db.DBConnection;
 import model.CustomerDTO;
 
 import java.sql.*;
@@ -42,14 +40,11 @@ public class CustomerDAOImpl implements CrudDAO{
     @Override
     public ArrayList<CustomerDTO> getAllCustomers() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.executeQuery("SELECT * FROM Customer");
-        
         ArrayList<CustomerDTO> allCustomers = new ArrayList<>();
-
         while(resultSet.next()){
-            String id = resultSet.getString(1);
-            String name = resultSet.getString(2);
-            String address = resultSet.getString(3);
-            allCustomers.add(new CustomerDTO(id,name,address));
+            allCustomers.add(
+                    new CustomerDTO(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3))
+            );
         }
         return allCustomers;
     }
