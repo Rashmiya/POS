@@ -17,7 +17,8 @@ public class CustomerDAOImpl implements CrudDAO{
 
     @Override
     public boolean exitCustomer(String id) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("SELECT id FROM Customer WHERE id=?",id);
+        ResultSet rst = SQLUtil.executeQuery("SELECT id FROM Customer WHERE id=?", id);
+        return rst.next();
     }
 
     @Override
