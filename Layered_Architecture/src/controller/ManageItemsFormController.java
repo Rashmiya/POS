@@ -16,13 +16,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.CustomerDTO;
 import model.ItemDTO;
+import view.tdm.CustomerTM;
 import view.tdm.ItemTM;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * @author : Sanu Vithanage
@@ -75,7 +78,12 @@ public class ManageItemsFormController {
     private void loadAllItems() {
         tblItems.getItems().clear();
         try {
-            itemDAO.getAll();
+            ArrayList<ItemDTO> allItems = itemDAO.getAll();
+
+            for (ItemDTO item: allItems
+            ) {
+                tblItems.getItems().add(new ItemTM(item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand()));
+            }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {

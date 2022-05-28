@@ -44,7 +44,7 @@ public class ItemDAOImpl implements CrudDAO<ItemDTO,String> {
         ArrayList<ItemDTO> allItems = new ArrayList<>();
         while(rst.next()){
             allItems.add(
-                    new ItemDTO(rst.getString(1),rst.getString(2),rst.getBigDecimal(3),rst.getInt(4))
+                    new ItemDTO(rst.getString(1),rst.getString(2),rst.getBigDecimal(4),rst.getInt(3))
             );
         }
         return allItems;
