@@ -9,16 +9,16 @@ import java.util.ArrayList;
  * @author : Sanu Vithanage
  * @since : 0.1.0
  **/
-public interface CrudDAO {
-    public boolean saveCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException;
+public interface CrudDAO <T,ID>{
+    public boolean save(T dto) throws SQLException, ClassNotFoundException;
 
-    public boolean updateCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException;
+    public boolean update(T dto) throws SQLException, ClassNotFoundException;
 
-    public boolean exitCustomer(String id) throws SQLException, ClassNotFoundException;
+    public boolean exit(ID id) throws SQLException, ClassNotFoundException;
 
-    public boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException;
+    public boolean delete(ID id) throws SQLException, ClassNotFoundException;
 
     public String generateNewId() throws SQLException, ClassNotFoundException;
 
-    public ArrayList<CustomerDTO> getAllCustomers() throws SQLException, ClassNotFoundException;
+    public ArrayList<T> getAll() throws SQLException, ClassNotFoundException;
 }

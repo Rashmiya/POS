@@ -41,7 +41,7 @@ public class ManageCustomersFormController {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
 //    Property Injection
-    private CrudDAO crudDAO= new CustomerDAOImpl();
+    private CrudDAO crudDAO = new CustomerDAOImpl();
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
