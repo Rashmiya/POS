@@ -56,7 +56,7 @@ import java.util.stream.Collectors;
     public Label lblDate;
     public Label lblTotal;
 
- private final CrudDAO<CustomerDTO, String> customerDAO = new CustomerDAOImpl();
+    private final CrudDAO<CustomerDTO, String> customerDAO = new CustomerDAOImpl();
     private final CrudDAO<ItemDTO, String> itemDAO = new ItemDAOImpl();
     private final CrudDAO<OrderDTO, String> orderDAO = new OrderDAOImpl();
     private final CrudDAO<OrderDetailDTO, String> orderDetailsDAO = new OrderDetailsDAOImpl();
@@ -112,8 +112,7 @@ import java.util.stream.Collectors;
 //                            "There is no such customer associated with the id " + id
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
-//                         No DI
-                        CrudDAO<CustomerDTO,String> customerDAO = new CustomerDAOImpl();
+//
                         customerDAO.search(newValue+"");
 
 //                        txtCustomerName.setText(search.getName());
@@ -141,8 +140,6 @@ import java.util.stream.Collectors;
 //                        throw new NotFoundException("There is no such item associated with the id " + code);
                     }
                     //Search Item
-                    //No DI
-                    CrudDAO<ItemDTO,String> itemDAO = new ItemDAOImpl();
                     ItemDTO item = itemDAO.search(newItemCode + "");
 
                     txtDescription.setText(item.getDescription());
@@ -186,14 +183,10 @@ import java.util.stream.Collectors;
     }
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-//        No DI
-       CrudDAO<ItemDTO,String> itemDAO =  new ItemDAOImpl();
        return itemDAO.exit(code);
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-//        No DI
-       CrudDAO<CustomerDTO,String> customerDAO = new CustomerDAOImpl();
        return customerDAO.exit(id);
     }
 
@@ -211,6 +204,7 @@ import java.util.stream.Collectors;
     private void loadAllCustomerIds() {
         try {
             ArrayList<CustomerDTO> all = customerDAO.getAll();
+
             for (CustomerDTO customerDTO : all) {
                 cmbCustomerId.getItems().add(customerDTO.getId());
             }
@@ -225,6 +219,7 @@ import java.util.stream.Collectors;
         try {
             /*Get all items*/
             ArrayList<ItemDTO> all = itemDAO.getAll();
+
             for (ItemDTO dto : all) {
                 cmbItemCode.getItems().add(dto.getCode());
             }
@@ -375,6 +370,7 @@ import java.util.stream.Collectors;
     public ItemDTO findItem(String code) {
         try {
             return itemDAO.search(code);
+
         } catch (SQLException e) {
             throw new RuntimeException("Failed to find the Item " + code, e);
         } catch (ClassNotFoundException e) {
