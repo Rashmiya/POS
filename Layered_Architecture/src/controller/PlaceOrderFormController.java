@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import dao.*;
-import db.DBConnection;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
@@ -192,7 +191,8 @@ import java.util.stream.Collectors;
 
     public String generateNewOrderId() {
         try {
-            return orderDAO.generateNewID();
+            return orderDAO.generateNewId();
+
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new order id").show();
         } catch (ClassNotFoundException e) {
@@ -316,15 +316,14 @@ import java.util.stream.Collectors;
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
         /*Transaction*/
-
+        Connection connection = null;
         try {
-            Connection connection = DBConnection.getDbConnection().getConnection();
             /*if order id already exist*/
-            if (orderDAO.exist(orderId)) {
+            if (orderDAO.exit(orderId)) {
 
             }
-
             connection.setAutoCommit(false);
+         // Save order
             boolean save = orderDAO.save(new OrderDTO(orderId, orderDate, customerId));
 
             if (!save) {
@@ -332,7 +331,7 @@ import java.util.stream.Collectors;
                 connection.setAutoCommit(true);
                 return false;
             }
-
+          //  Save orderDetails
             for (OrderDetailDTO detail : orderDetails) {
                 boolean save1 = orderDetailsDAO.save(detail);
                 if (!save1) {
