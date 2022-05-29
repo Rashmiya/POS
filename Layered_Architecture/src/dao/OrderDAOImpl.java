@@ -1,6 +1,5 @@
 package dao;
 
-import model.CustomerDTO;
 import model.OrderDTO;
 
 import java.sql.SQLException;
@@ -35,6 +34,11 @@ public class OrderDAOImpl implements CrudDAO<OrderDTO, String>{
 
     @Override
     public ArrayList<OrderDTO> getAll() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public OrderDTO search(String s) throws SQLException, ClassNotFoundException {
         return null;
     }
 }
