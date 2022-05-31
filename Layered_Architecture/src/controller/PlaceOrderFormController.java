@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import dao.*;
+import db.DBConnection;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
@@ -54,7 +55,7 @@ import java.util.stream.Collectors;
     public Label lblId;
     public Label lblDate;
     public Label lblTotal;
-
+// Property Injection   [Using polymorphism]
     private final CrudDAO<CustomerDTO, String> customerDAO = new CustomerDAOImpl();
     private final CrudDAO<ItemDTO, String> itemDAO = new ItemDAOImpl();
     private final CrudDAO<OrderDTO, String> orderDAO = new OrderDAOImpl();
@@ -63,7 +64,6 @@ import java.util.stream.Collectors;
     private String orderId;
 
     public void initialize(){
-
         tblOrderDetails.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
         tblOrderDetails.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("description"));
         tblOrderDetails.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("qty"));
@@ -104,24 +104,20 @@ import java.util.stream.Collectors;
             enableOrDisablePlaceOrderButton();
 
             if (newValue != null) {
-                try {
                     /*Search Customer*/
                     try {
                         if (!existCustomer(newValue + "")) {
 //                            "There is no such customer associated with the id " + id
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
-//
-                        customerDAO.search(newValue+"");
+                        CustomerDTO search = customerDAO.search(newValue + "");
 
-//                        txtCustomerName.setText(search.getName());
+                        txtCustomerName.setText(search.getName());
 
-                    } catch (SQLException e) {
+                    } catch (SQLException | ClassNotFoundException e) {
+                        e.printStackTrace();
                         new Alert(Alert.AlertType.ERROR, "Failed to find the customer " + newValue + "" + e).show();
                     }
-                  } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
             } else {
                 txtCustomerName.clear();
             }
@@ -316,8 +312,8 @@ import java.util.stream.Collectors;
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
         /*Transaction*/
-        Connection connection = null;
         try {
+            Connection connection = DBConnection.getDbConnection().getConnection();
             /*if order id already exist*/
             if (orderDAO.exit(orderId)) {
 
@@ -359,7 +355,7 @@ import java.util.stream.Collectors;
             return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | NullPointerException e) {
             e.printStackTrace();
         }
         return false;
