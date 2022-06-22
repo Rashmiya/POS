@@ -4,7 +4,7 @@ import model.CustomerDTO;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CustomerDAOImpl implements CrudDAO<CustomerDTO,String> {
+public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public boolean save(CustomerDTO dto) throws SQLException, ClassNotFoundException {
         return SQLUtil.executeUpdate("INSERT INTO Customer (id,name, address) VALUES (?,?,?)",dto.getId(),dto.getName(),dto.getAddress());
@@ -56,6 +56,11 @@ public class CustomerDAOImpl implements CrudDAO<CustomerDTO,String> {
         if (resultSet.next()) {
             return new CustomerDTO(resultSet.getString(1),resultSet.getString(2), resultSet.getString(3));
         }
+        return null;
+    }
+
+    @Override
+    public ArrayList<CustomerDTO> getAllCustomersByAddress(String address) {
         return null;
     }
 }
