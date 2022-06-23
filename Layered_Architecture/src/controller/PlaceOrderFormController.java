@@ -56,10 +56,10 @@ import java.util.stream.Collectors;
     public Label lblDate;
     public Label lblTotal;
 // Property Injection   [Using polymorphism]
-    private final CrudDAO<CustomerDTO, String> customerDAO = new CustomerDAOImpl();
-    private final CrudDAO<ItemDTO, String> itemDAO = new ItemDAOImpl();
-    private final CrudDAO<OrderDTO, String> orderDAO = new OrderDAOImpl();
-    private final CrudDAO<OrderDetailDTO, String> orderDetailsDAO = new OrderDetailsDAOImpl();
+    private final CustomerDAO customerDAO = new CustomerDAOImpl();
+    private final ItemDAO itemDAO = new ItemDAOImpl();
+    private final OrderDAO orderDAO = new OrderDAOImpl();
+    private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
 
     private String orderId;
 
