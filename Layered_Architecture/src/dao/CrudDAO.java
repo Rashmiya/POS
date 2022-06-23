@@ -1,6 +1,6 @@
 package dao;
 
-import model.CustomerDTO;
+import model.OrderDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,4 +23,5 @@ public interface CrudDAO <T,ID>{
     public ArrayList<T> getAll() throws SQLException, ClassNotFoundException;
 
     public T search(ID id) throws SQLException,ClassNotFoundException;
+
 }
