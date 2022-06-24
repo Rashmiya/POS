@@ -6,6 +6,8 @@ import model.CustomerDTO;
 import java.sql.*;
 import java.util.ArrayList;
 
+//  To write SQL Query for each related classes.
+
 public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public boolean save(CustomerDTO dto) throws SQLException, ClassNotFoundException {

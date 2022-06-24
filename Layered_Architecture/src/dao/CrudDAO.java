@@ -9,6 +9,9 @@ import java.util.ArrayList;
  * @author : Sanu Vithanage
  * @since : 0.1.0
  **/
+
+// To write common CRUD operations for our All of tables.
+
 public interface CrudDAO <T,ID>{
     public boolean save(T dto) throws SQLException, ClassNotFoundException;
 
