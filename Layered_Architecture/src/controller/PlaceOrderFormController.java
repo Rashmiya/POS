@@ -56,11 +56,6 @@ import java.util.stream.Collectors;
     public Label lblId;
     public Label lblDate;
     public Label lblTotal;
-/*// Property Injection   [Using polymorphism]
-    private final CustomerDAO customerDAO = new CustomerDAOImpl();
-    private final ItemDAO itemDAO = new ItemDAOImpl();
-    private final OrderDAO orderDAO = new OrderDAOImpl();
-    private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();*/
 
     private String orderId;
 

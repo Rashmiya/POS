@@ -15,6 +15,8 @@ import model.OrderDetailDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
 
 public class PurchaseOrderBOImpl {
     // Property Injection   [Using polymorphism]
@@ -22,10 +24,9 @@ public class PurchaseOrderBOImpl {
     private final ItemDAO itemDAO = new ItemDAOImpl();
     private final OrderDAO orderDAO = new OrderDAOImpl();
     private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
-    
-    public void purchaseOrder(){
+
+    public boolean purchaseOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException,ClassNotFoundException{
         /*Transaction*/
-        try {
             Connection connection = DBConnection.getDbConnection().getConnection();
             /*if order id already exist*/
             if (orderDAO.exit(orderId)) {
@@ -66,11 +67,7 @@ public class PurchaseOrderBOImpl {
             connection.commit();
             connection.setAutoCommit(true);
             return true;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException | NullPointerException e) {
-            e.printStackTrace();
-        }
+
         return false;
     }
 }
