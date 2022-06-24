@@ -315,10 +315,10 @@ import java.util.stream.Collectors;
     }
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
-        /*Transaction*/
+       /* *//*Transaction*//*
         try {
             Connection connection = DBConnection.getDbConnection().getConnection();
-            /*if order id already exist*/
+            *//*if order id already exist*//*
             if (orderDAO.exit(orderId)) {
 
             }
@@ -362,7 +362,7 @@ import java.util.stream.Collectors;
         } catch (ClassNotFoundException | NullPointerException e) {
             e.printStackTrace();
         }
-        return false;
+        return false;*/
     }
 
 
