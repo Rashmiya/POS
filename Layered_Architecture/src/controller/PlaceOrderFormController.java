@@ -1,5 +1,6 @@
 package controller;
 
+import bo.PurchaseOrderBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -106,8 +107,9 @@ import java.util.stream.Collectors;
 //                            "There is no such customer associated with the id " + id
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
-                        CustomerDTO search = customerDAO.search(newValue + "");
-
+//                        tight Coupling -DI
+                        PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+                        CustomerDTO search = purchaseOrderBO.searchCustomer(newValue + "");
                         txtCustomerName.setText(search.getName());
 
                     } catch (SQLException | ClassNotFoundException e) {
@@ -307,54 +309,17 @@ import java.util.stream.Collectors;
     }
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
-       /* *//*Transaction*//*
+        PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
         try {
-            Connection connection = DBConnection.getDbConnection().getConnection();
-            *//*if order id already exist*//*
-            if (orderDAO.exit(orderId)) {
+//             tight coupling -DI
+            purchaseOrderBO.purchaseOrder(orderId,orderDate,customerId,orderDetails);
 
-            }
-            connection.setAutoCommit(false);
-         // Save order
-            boolean save = orderDAO.save(new OrderDTO(orderId, orderDate, customerId));
-
-            if (!save) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                return false;
-            }
-          //  Save orderDetails
-            for (OrderDetailDTO detail : orderDetails) {
-                boolean save1 = orderDetailsDAO.save(detail);
-                if (!save1) {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                    return false;
-                }
-
-                //Search & Update Item
-                ItemDTO item = findItem(detail.getItemCode());
-                item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
-
-                //update item
-                System.out.println(item);
-                boolean update = itemDAO.update(item);
-
-                if (!update) {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                    return false;
-                }
-            }
-            connection.commit();
-            connection.setAutoCommit(true);
-            return true;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException | NullPointerException e) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return false;*/
+        return false;
     }
 
 

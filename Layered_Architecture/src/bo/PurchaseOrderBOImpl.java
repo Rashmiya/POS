@@ -9,6 +9,7 @@ import dao.impl.ItemDAOImpl;
 import dao.impl.OrderDAOImpl;
 import dao.impl.OrderDetailsDAOImpl;
 import db.DBConnection;
+import model.CustomerDTO;
 import model.ItemDTO;
 import model.OrderDTO;
 import model.OrderDetailDTO;
@@ -51,7 +52,7 @@ public class PurchaseOrderBOImpl {
                 }
 
                 //Search & Update Item
-                ItemDTO item = findItem(detail.getItemCode());
+                ItemDTO item = null /*findItem(detail.getItemCode())*/;
                 item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
                 //update item
@@ -67,7 +68,9 @@ public class PurchaseOrderBOImpl {
             connection.commit();
             connection.setAutoCommit(true);
             return true;
+    }
 
-        return false;
+    public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
+          return customerDAO.search(id);
     }
 }
