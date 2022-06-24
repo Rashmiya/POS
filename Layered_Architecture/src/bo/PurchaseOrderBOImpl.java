@@ -1,5 +1,13 @@
 package bo;
 
+import dao.custom.CustomerDAO;
+import dao.custom.ItemDAO;
+import dao.custom.OrderDAO;
+import dao.custom.OrderDetailsDAO;
+import dao.impl.CustomerDAOImpl;
+import dao.impl.ItemDAOImpl;
+import dao.impl.OrderDAOImpl;
+import dao.impl.OrderDetailsDAOImpl;
 import db.DBConnection;
 import model.ItemDTO;
 import model.OrderDTO;
@@ -9,6 +17,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class PurchaseOrderBOImpl {
+    // Property Injection   [Using polymorphism]
+    private final CustomerDAO customerDAO = new CustomerDAOImpl();
+    private final ItemDAO itemDAO = new ItemDAOImpl();
+    private final OrderDAO orderDAO = new OrderDAOImpl();
+    private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
+    
     public void purchaseOrder(){
         /*Transaction*/
         try {

@@ -8,7 +8,6 @@ import dao.custom.ItemDAO;
 import dao.custom.OrderDAO;
 import dao.custom.OrderDetailsDAO;
 import dao.impl.*;
-import db.DBConnection;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
@@ -23,14 +22,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.CustomerDTO;
 import model.ItemDTO;
-import model.OrderDTO;
 import model.OrderDetailDTO;
 import view.tdm.OrderDetailTM;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -59,11 +56,11 @@ import java.util.stream.Collectors;
     public Label lblId;
     public Label lblDate;
     public Label lblTotal;
-// Property Injection   [Using polymorphism]
+/*// Property Injection   [Using polymorphism]
     private final CustomerDAO customerDAO = new CustomerDAOImpl();
     private final ItemDAO itemDAO = new ItemDAOImpl();
     private final OrderDAO orderDAO = new OrderDAOImpl();
-    private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
+    private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();*/
 
     private String orderId;
 
