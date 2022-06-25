@@ -1,14 +1,10 @@
 package controller;
 
+import bo.PurchaseOrderBO;
 import bo.PurchaseOrderBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import dao.custom.CustomerDAO;
-import dao.custom.ItemDAO;
-import dao.custom.OrderDAO;
-import dao.custom.OrderDetailsDAO;
-import dao.impl.*;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
@@ -59,6 +55,8 @@ import java.util.stream.Collectors;
     public Label lblTotal;
 
     private String orderId;
+//    Dependency Injection - property Injection
+    PurchaseOrderBO purchaseOrderBO = new PurchaseOrderBOImpl();
 
     public void initialize(){
         tblOrderDetails.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -106,8 +104,7 @@ import java.util.stream.Collectors;
 //                            "There is no such customer associated with the id " + id
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
-//                        tight Coupling -DI
-                        PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+//                        Loose Coupling
                         CustomerDTO search = purchaseOrderBO.searchCustomer(newValue + "");
 
                         txtCustomerName.setText(search.getName());
@@ -131,8 +128,7 @@ import java.util.stream.Collectors;
 //                        throw new NotFoundException("There is no such item associated with the id " + code);
                     }
                     //Search Item
-                    // tight Coupling -DI
-                    PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+                    // Loose Coupling
                     ItemDTO item = purchaseOrderBO.searchItem(newItemCode + "");
 
                     txtDescription.setText(item.getDescription());
@@ -175,22 +171,19 @@ import java.util.stream.Collectors;
     }
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-//        tight coupling - DI
-        PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+//        Loose coupling
         return purchaseOrderBO.exitItem(code);
 
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        //        tight coupling - DI
-        PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+        //        Loose coupling
        return purchaseOrderBO.exitCustomer(id);
     }
 
     public String generateNewOrderId() {
         try {
-            //        tight coupling - DI
-            PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+            //        Loose coupling
             return purchaseOrderBO.generateNewOrderId();
 
         } catch (SQLException e) {
@@ -203,8 +196,7 @@ import java.util.stream.Collectors;
 
     private void loadAllCustomerIds() {
         try {
-            //        tight coupling - DI
-            PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+            //        Loose coupling
             ArrayList<CustomerDTO> allCustomerIDs = purchaseOrderBO.getAllCustomerIDs();
 
             for (CustomerDTO customerDTO : allCustomerIDs) {
@@ -220,8 +212,7 @@ import java.util.stream.Collectors;
     private void loadAllItemCodes() {
         try {
             /*Get all items*/
-            //        tight coupling - DI
-            PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+            //        Loose coupling
             ArrayList<ItemDTO> allItemCodes = purchaseOrderBO.loadAllItemCodes();
 
             for (ItemDTO dto : allItemCodes) {
@@ -319,9 +310,8 @@ import java.util.stream.Collectors;
     }
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
-        PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
         try {
-//             tight coupling -DI
+//             Loose coupling
             purchaseOrderBO.purchaseOrder(orderId,orderDate,customerId,orderDetails);
 
         } catch (SQLException e) {
@@ -335,8 +325,7 @@ import java.util.stream.Collectors;
 
     public ItemDTO findItem(String code) {
         try {
-//            DI - tight Coupling
-            PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+//            Loose Coupling
             return purchaseOrderBO.searchItem(code);
 
         } catch (SQLException e) {

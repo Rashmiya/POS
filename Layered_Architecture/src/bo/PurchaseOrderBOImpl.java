@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PurchaseOrderBOImpl {
+public class PurchaseOrderBOImpl implements PurchaseOrderBO{
     // Property Injection   [Using polymorphism]
 //    DAO part eka handle wenne BO Layer eka ethule.
     private final CustomerDAO customerDAO = new CustomerDAOImpl();
@@ -28,10 +28,11 @@ public class PurchaseOrderBOImpl {
     private final OrderDAO orderDAO = new OrderDAOImpl();
     private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
 
-    public boolean purchaseOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException,ClassNotFoundException{
+    @Override
+      public boolean purchaseOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException,ClassNotFoundException{
         /*Transaction*/
             Connection connection = DBConnection.getDbConnection().getConnection();
-            /*if order id already exist*/
+//            if order id already exist
             if (orderDAO.exit(orderId)) {
 
             }
@@ -72,24 +73,37 @@ public class PurchaseOrderBOImpl {
             return true;
     }
 
+    @Override
     public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
           return customerDAO.search(id);
     }
+
+    @Override
     public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {
           return itemDAO.search(code);
     }
+
+    @Override
     public boolean exitItem(String code) throws SQLException, ClassNotFoundException {
         return itemDAO.exit(code);
     }
+
+    @Override
     public boolean exitCustomer(String id) throws SQLException, ClassNotFoundException {
         return customerDAO.exit(id);
     }
+
+    @Override
     public String generateNewOrderId() throws SQLException, ClassNotFoundException {
         return orderDAO.generateNewId();
     }
+
+    @Override
     public ArrayList<CustomerDTO> getAllCustomerIDs() throws SQLException, ClassNotFoundException {
         return customerDAO.getAll();
     }
+
+    @Override
     public ArrayList<ItemDTO> loadAllItemCodes() throws SQLException, ClassNotFoundException {
         return itemDAO.getAll();
     }
