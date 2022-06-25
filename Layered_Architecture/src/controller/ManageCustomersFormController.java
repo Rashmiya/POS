@@ -211,7 +211,7 @@ public class ManageCustomersFormController {
 
     private String generateNewId() {
         try {
-           /* return  customerDAO.generateNewId();*/
+//           tight coupling -DI
             CustomerBOImpl customerBO = new CustomerBOImpl();
             return customerBO.generateNewCustomerID();
 

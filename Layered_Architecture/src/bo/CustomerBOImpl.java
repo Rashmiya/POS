@@ -29,5 +29,5 @@ public class CustomerBOImpl {
     public String generateNewCustomerID() throws SQLException, ClassNotFoundException {
         return customerDAO.generateNewId();
     }
-    
+
 }
