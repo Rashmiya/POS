@@ -80,7 +80,6 @@ import java.util.stream.Collectors;
 
             return new ReadOnlyObjectWrapper<>(btnDelete);
         });
-
         orderId = generateNewOrderId();
         lblId.setText("Order ID: " + orderId);
         lblDate.setText(LocalDate.now().toString());
@@ -110,8 +109,8 @@ import java.util.stream.Collectors;
 //                        tight Coupling -DI
                         PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
                         CustomerDTO search = purchaseOrderBO.searchCustomer(newValue + "");
-                        txtCustomerName.setText(search.getName());
 
+                        txtCustomerName.setText(search.getName());
                     } catch (SQLException | ClassNotFoundException e) {
                         e.printStackTrace();
                         new Alert(Alert.AlertType.ERROR, "Failed to find the customer " + newValue + "" + e).show();
@@ -120,7 +119,6 @@ import java.util.stream.Collectors;
                 txtCustomerName.clear();
             }
         });
-
 
         cmbItemCode.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newItemCode) -> {
             txtQty.setEditable(newItemCode != null);
@@ -133,7 +131,9 @@ import java.util.stream.Collectors;
 //                        throw new NotFoundException("There is no such item associated with the id " + code);
                     }
                     //Search Item
-                    ItemDTO item = itemDAO.search(newItemCode + "");
+                    // tight Coupling -DI
+                    PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+                    ItemDTO item = purchaseOrderBO.searchItem(newItemCode + "");
 
                     txtDescription.setText(item.getDescription());
                     txtUnitPrice.setText(item.getUnitPrice().setScale(2).toString());
@@ -141,7 +141,6 @@ import java.util.stream.Collectors;
 //                    txtQtyOnHand.setText(tblOrderDetails.getItems().stream().filter(detail-> detail.getCode().equals(item.getCode())).<Integer>map(detail-> item.getQtyOnHand() - detail.getQty()).findFirst().orElse(item.getQtyOnHand()) + "");
                     Optional<OrderDetailTM> optOrderDetail = tblOrderDetails.getItems().stream().filter(detail -> detail.getCode().equals(newItemCode)).findFirst();
                     txtQtyOnHand.setText((optOrderDetail.isPresent() ? item.getQtyOnHand() - optOrderDetail.get().getQty() : item.getQtyOnHand()) + "");
-
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 } catch (ClassNotFoundException e) {
@@ -176,16 +175,23 @@ import java.util.stream.Collectors;
     }
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-       return itemDAO.exit(code);
+//        tight coupling - DI
+        PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+        return purchaseOrderBO.exitItem(code);
+
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-       return customerDAO.exit(id);
+        //        tight coupling - DI
+        PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+       return purchaseOrderBO.exitCustomer(id);
     }
 
     public String generateNewOrderId() {
         try {
-            return orderDAO.generateNewId();
+            //        tight coupling - DI
+            PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+            return purchaseOrderBO.generateNewOrderId();
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new order id").show();
@@ -197,9 +203,11 @@ import java.util.stream.Collectors;
 
     private void loadAllCustomerIds() {
         try {
-            ArrayList<CustomerDTO> all = customerDAO.getAll();
+            //        tight coupling - DI
+            PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+            ArrayList<CustomerDTO> allCustomerIDs = purchaseOrderBO.getAllCustomerIDs();
 
-            for (CustomerDTO customerDTO : all) {
+            for (CustomerDTO customerDTO : allCustomerIDs) {
                 cmbCustomerId.getItems().add(customerDTO.getId());
             }
         } catch (SQLException e) {
@@ -212,9 +220,11 @@ import java.util.stream.Collectors;
     private void loadAllItemCodes() {
         try {
             /*Get all items*/
-            ArrayList<ItemDTO> all = itemDAO.getAll();
+            //        tight coupling - DI
+            PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+            ArrayList<ItemDTO> allItemCodes = purchaseOrderBO.loadAllItemCodes();
 
-            for (ItemDTO dto : all) {
+            for (ItemDTO dto : allItemCodes) {
                 cmbItemCode.getItems().add(dto.getCode());
             }
         } catch (SQLException e) {
@@ -325,7 +335,9 @@ import java.util.stream.Collectors;
 
     public ItemDTO findItem(String code) {
         try {
-            return itemDAO.search(code);
+//            DI - tight Coupling
+            PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+            return purchaseOrderBO.searchItem(code);
 
         } catch (SQLException e) {
             throw new RuntimeException("Failed to find the Item " + code, e);
