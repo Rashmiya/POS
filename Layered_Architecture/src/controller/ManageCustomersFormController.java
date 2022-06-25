@@ -76,7 +76,7 @@ public class ManageCustomersFormController {
         tblCustomers.getItems().clear();
         /*Get all customers*/
         try {
-            // tight coupling
+            // loose Coupling
             ArrayList<CustomerDTO> allCustomers = customerBO.getAllCustomers();
 
             for (CustomerDTO customer: allCustomers
@@ -149,7 +149,7 @@ public class ManageCustomersFormController {
                 if (existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, id + " already exists").show();
                 }
-                // tight coupling -DI
+                // loose Coupling
                 customerBO.saveCustomer(new CustomerDTO(id, name, address));
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
@@ -164,7 +164,7 @@ public class ManageCustomersFormController {
                 if (!existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
-                // tight coupling
+                //loose Coupling
                 customerBO.updateCustomer(new CustomerDTO(id, name, address));
 
             } catch (SQLException e) {
@@ -182,7 +182,7 @@ public class ManageCustomersFormController {
 
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-//       tight coupling
+//       loose Coupling
         return customerBO.exitCustomer(id);
     }
 
@@ -194,7 +194,7 @@ public class ManageCustomersFormController {
             if (!existCustomer(id)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
             }
-//         tight coupling
+//      loose Coupling
             customerBO.deleteCustomer(id);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
@@ -209,7 +209,7 @@ public class ManageCustomersFormController {
 
     private String generateNewId() {
         try {
-//           tight coupling
+//           loose Coupling
             return customerBO.generateNewCustomerID();
 
         } catch (SQLException e) {
@@ -224,7 +224,6 @@ public class ManageCustomersFormController {
             int newCustomerId = Integer.parseInt(id.replace("C", "")) + 1;
             return String.format("C00-%03d", newCustomerId);
         }
-
     }
 
     private String getLastCustomerId() {
