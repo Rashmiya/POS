@@ -23,5 +23,11 @@ public class CustomerBOImpl {
     public boolean exitCustomer(String id) throws SQLException, ClassNotFoundException {
         return customerDAO.exit(id);
     }
+    public boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException {
+        return customerDAO.delete(id);
+    }
+    public String generateNewCustomerID() throws SQLException, ClassNotFoundException {
+        return customerDAO.generateNewId();
+    }
     
 }

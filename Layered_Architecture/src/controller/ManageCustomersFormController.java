@@ -195,7 +195,9 @@ public class ManageCustomersFormController {
             if (!existCustomer(id)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
             }
-            customerDAO.delete(id);
+//         tight coupling -DI
+            CustomerBOImpl customerBO = new CustomerBOImpl();
+            customerBO.deleteCustomer(id);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
             tblCustomers.getSelectionModel().clearSelection();
@@ -209,7 +211,9 @@ public class ManageCustomersFormController {
 
     private String generateNewId() {
         try {
-            return  customerDAO.generateNewId();
+           /* return  customerDAO.generateNewId();*/
+            CustomerBOImpl customerBO = new CustomerBOImpl();
+            return customerBO.generateNewCustomerID();
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
