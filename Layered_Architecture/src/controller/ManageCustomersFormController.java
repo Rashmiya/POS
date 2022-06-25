@@ -182,7 +182,9 @@ public class ManageCustomersFormController {
 
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        return customerDAO.exit(id);
+//       tight coupling - DI
+        CustomerBOImpl customerBO = new CustomerBOImpl();
+        return customerBO.exitCustomer(id);
     }
 
 

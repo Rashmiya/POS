@@ -20,4 +20,8 @@ public class CustomerBOImpl {
     public boolean updateCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException {
         return customerDAO.update(dto);
     }
+    public boolean exitCustomer(String id) throws SQLException, ClassNotFoundException {
+        return customerDAO.exit(id);
+    }
+    
 }
