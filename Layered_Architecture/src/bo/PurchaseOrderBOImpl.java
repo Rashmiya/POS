@@ -22,6 +22,7 @@ import java.util.List;
 
 public class PurchaseOrderBOImpl {
     // Property Injection   [Using polymorphism]
+//    DAO part eka handle wenne BO Layer eka ethule.
     private final CustomerDAO customerDAO = new CustomerDAOImpl();
     private final ItemDAO itemDAO = new ItemDAOImpl();
     private final OrderDAO orderDAO = new OrderDAOImpl();
