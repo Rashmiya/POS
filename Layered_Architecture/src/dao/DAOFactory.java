@@ -2,6 +2,9 @@ package dao;
 
 // eka object ekk hadala reuse kireema
 
+import dao.custom.CustomerDAO;
+import dao.impl.CustomerDAOImpl;
+
 public class DAOFactory {
     private static DAOFactory daoFactory;
 
@@ -17,10 +20,10 @@ public class DAOFactory {
         CUSTOMER,ITEM,ORDER,ORDERDETAILS,QUERYDAO
     }
 //    method for hide the object creation logic and return what client wants
-    public void getDAO(DAOTypes types ){
+    public CustomerDAO getDAO(DAOTypes types ){
         switch (types){
             case CUSTOMER:
-                return;
+                return new CustomerDAOImpl();
             case ITEM:
                 return;
             case ORDER:
