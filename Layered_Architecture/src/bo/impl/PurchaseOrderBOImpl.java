@@ -2,14 +2,8 @@ package bo.impl;
 
 import bo.custom.PurchaseOrderBO;
 import dao.DAOFactory;
-import dao.custom.CustomerDAO;
-import dao.custom.ItemDAO;
-import dao.custom.OrderDAO;
-import dao.custom.OrderDetailsDAO;
-import dao.impl.CustomerDAOImpl;
-import dao.impl.ItemDAOImpl;
-import dao.impl.OrderDAOImpl;
-import dao.impl.OrderDetailsDAOImpl;
+import dao.custom.*;
+import dao.impl.*;
 import db.DBConnection;
 import model.CustomerDTO;
 import model.ItemDTO;
@@ -28,12 +22,14 @@ public class PurchaseOrderBOImpl implements PurchaseOrderBO {
     /*  private final CustomerDAO customerDAO = new CustomerDAOImpl();
         private final ItemDAO itemDAO = new ItemDAOImpl();
         private final OrderDAO orderDAO = new OrderDAOImpl();
-        private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();*/
+        private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
+        private final JoinQueryDAO joinQueryDAO = new JoinQueryDAOImpl();*/
 
-    CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CUSTOMER);
-    ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM);
-    OrderDAO orderDAO = DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDER);
-    OrderDetailsDAO orderDetailsDAO = DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDERDETAILS);
+    CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CUSTOMER);
+    ItemDAO itemDAO = (ItemDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM);
+    OrderDAO orderDAO = (OrderDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDER);
+    OrderDetailsDAO orderDetailsDAO = (OrderDetailsDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDERDETAILS);
+    JoinQueryDAO joinQueryDAO = (JoinQueryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.JOINQUERYDAO);
 
     @Override
       public boolean purchaseOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException,ClassNotFoundException{
