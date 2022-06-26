@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 // To write common CRUD operations for our All of tables.
 
-public interface CrudDAO <T,ID>{
+public interface CrudDAO <T,ID> extends SuperDAO{
     public boolean save(T dto) throws SQLException, ClassNotFoundException;
 
     public boolean update(T dto) throws SQLException, ClassNotFoundException;
