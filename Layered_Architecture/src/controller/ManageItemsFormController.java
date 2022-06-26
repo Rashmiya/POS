@@ -1,7 +1,7 @@
 package controller;
 
-import bo.ItemBO;
-import bo.ItemBOImpl;
+import bo.custom.ItemBO;
+import bo.impl.ItemBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
@@ -210,12 +210,10 @@ public class ManageItemsFormController {
         btnAddNewItem.fire();
     }
 
-
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
         // Loose coupling
         return itemBO.existItem(code);
     }
-
 
     private String generateNewId() {
         try {

@@ -1,7 +1,7 @@
 package controller;
 
-import bo.PurchaseOrderBO;
-import bo.PurchaseOrderBOImpl;
+import bo.custom.PurchaseOrderBO;
+import bo.impl.PurchaseOrderBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -321,7 +321,6 @@ import java.util.stream.Collectors;
         }
         return false;
     }
-
 
     public ItemDTO findItem(String code) {
         try {

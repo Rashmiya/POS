@@ -1,7 +1,7 @@
 package controller;
 
-import bo.CustomerBO;
-import bo.CustomerBOImpl;
+import bo.custom.CustomerBO;
+import bo.impl.CustomerBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
@@ -178,12 +178,10 @@ public class ManageCustomersFormController {
         btnAddNewCustomer.fire();
     }
 
-
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
 //       loose Coupling
         return customerBO.exitCustomer(id);
     }
-
 
     public void btnDelete_OnAction(ActionEvent actionEvent) {
         /*Delete Customer*/

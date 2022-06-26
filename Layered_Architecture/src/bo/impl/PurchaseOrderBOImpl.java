@@ -1,5 +1,6 @@
-package bo;
+package bo.impl;
 
+import bo.custom.PurchaseOrderBO;
 import dao.custom.CustomerDAO;
 import dao.custom.ItemDAO;
 import dao.custom.OrderDAO;
@@ -20,8 +21,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PurchaseOrderBOImpl implements PurchaseOrderBO{
-    // Property Injection   [Using polymorphism]
+public class PurchaseOrderBOImpl implements PurchaseOrderBO {
+    // Object creation logic
 //    DAO part eka handle wenne BO Layer eka ethule.
     private final CustomerDAO customerDAO = new CustomerDAOImpl();
     private final ItemDAO itemDAO = new ItemDAOImpl();
