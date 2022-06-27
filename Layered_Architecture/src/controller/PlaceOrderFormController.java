@@ -1,5 +1,6 @@
 package controller;
 
+import bo.BOFactory;
 import bo.custom.PurchaseOrderBO;
 import bo.impl.PurchaseOrderBOImpl;
 import com.jfoenix.controls.JFXButton;
@@ -56,7 +57,8 @@ import java.util.stream.Collectors;
 
     private String orderId;
 //    Dependency Injection - property Injection
-    PurchaseOrderBO purchaseOrderBO = new PurchaseOrderBOImpl();
+/*    PurchaseOrderBO purchaseOrderBO = new PurchaseOrderBOImpl();*/
+    PurchaseOrderBO purchaseOrderBO = (PurchaseOrderBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PURCHASEORDER);
 
     public void initialize(){
         tblOrderDetails.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
