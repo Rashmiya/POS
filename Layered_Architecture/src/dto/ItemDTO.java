@@ -1,4 +1,4 @@
-package model.dto;
+package dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

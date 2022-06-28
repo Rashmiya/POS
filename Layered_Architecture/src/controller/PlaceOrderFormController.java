@@ -17,9 +17,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.dto.CustomerDTO;
-import model.dto.ItemDTO;
-import model.dto.OrderDetailDTO;
+import dto.CustomerDTO;
+import dto.ItemDTO;
+import dto.OrderDetailDTO;
 import view.tdm.OrderDetailTM;
 
 import java.io.IOException;

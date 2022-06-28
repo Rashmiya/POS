@@ -3,7 +3,7 @@ package bo.impl;
 import bo.custom.ItemBO;
 import dao.DAOFactory;
 import dao.custom.ItemDAO;
-import model.dto.ItemDTO;
+import dto.ItemDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

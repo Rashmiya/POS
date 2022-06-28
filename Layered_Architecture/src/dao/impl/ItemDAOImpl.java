@@ -1,19 +1,20 @@
 package dao.impl;
 import dao.SQLUtil;
 import dao.custom.ItemDAO;
-import model.dto.ItemDTO;
+import dto.ItemDTO;
+import entity.Item;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class ItemDAOImpl implements ItemDAO {
     @Override
-    public boolean save(ItemDTO dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Item dto) throws SQLException, ClassNotFoundException {
         return SQLUtil.executeUpdate("INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)",dto.getCode(),dto.getDescription(),dto.getUnitPrice(),dto.getQtyOnHand());
     }
 
     @Override
-    public boolean update(ItemDTO dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Item dto) throws SQLException, ClassNotFoundException {
         return SQLUtil.executeUpdate("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?",dto.getDescription(),dto.getUnitPrice(),dto.getQtyOnHand(),dto.getCode());
     }
 
@@ -41,7 +42,7 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public ArrayList<ItemDTO> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Item> getAll() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Item");
         ArrayList<ItemDTO> allItems = new ArrayList<>();
         while(rst.next()){
@@ -53,7 +54,7 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public ItemDTO search(String code) throws SQLException, ClassNotFoundException {
+    public Item search(String code) throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Item WHERE code = ?", code);
         if (rst.next()) {
             return new ItemDTO(rst.getString(1),rst.getString(2),rst.getBigDecimal(4),rst.getInt(3));

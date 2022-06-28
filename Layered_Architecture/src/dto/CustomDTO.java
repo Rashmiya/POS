@@ -1,4 +1,4 @@
-package model.dto;
+package dto;
 
 // Join Query walata adala Onema Details ekk yeweemata.
 
