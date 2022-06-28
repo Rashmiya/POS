@@ -8,6 +8,7 @@ import dto.CustomerDTO;
 import dto.ItemDTO;
 import dto.OrderDTO;
 import dto.OrderDetailDTO;
+import entity.Customer;
 import entity.Item;
 import entity.OrderDetails;
 import entity.Orders;
@@ -81,17 +82,19 @@ public class PurchaseOrderBOImpl implements PurchaseOrderBO {
 
     @Override
     public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
-          return customerDAO.search(id);
+        Customer searchEntity = customerDAO.search(id);
+        return new CustomerDTO(searchEntity.getId(),searchEntity.getName(),searchEntity.getAddress());
     }
 
     @Override
     public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {
-          return itemDAO.search(code);
+        Item searchEntity = itemDAO.search(code);
+        return new ItemDTO(searchEntity.getCode(),searchEntity.getDescription(),searchEntity.getUnitPrice(),searchEntity.getQtyOnHand());
     }
 
     @Override
     public boolean exitItem(String code) throws SQLException, ClassNotFoundException {
-        return itemDAO.exit(code);
+         return itemDAO.exit(code);
     }
 
     @Override
@@ -106,11 +109,23 @@ public class PurchaseOrderBOImpl implements PurchaseOrderBO {
 
     @Override
     public ArrayList<CustomerDTO> getAllCustomerIDs() throws SQLException, ClassNotFoundException {
-        return customerDAO.getAll();
+        ArrayList<Customer> all = customerDAO.getAll();
+        ArrayList<CustomerDTO> allCustomers = new ArrayList<>();
+
+        for (Customer customerEntity :all) {
+            allCustomers.add(new CustomerDTO(customerEntity.getId(),customerEntity.getName(),customerEntity.getAddress()));
+        }
+        return allCustomers;
     }
 
     @Override
     public ArrayList<ItemDTO> loadAllItemCodes() throws SQLException, ClassNotFoundException {
-        return itemDAO.getAll();
+        ArrayList<Item> all = itemDAO.getAll();
+        ArrayList<ItemDTO> allItems = new ArrayList<>();
+
+        for (Item itemEntity: all) {
+            allItems.add(new ItemDTO(itemEntity.getCode(),itemEntity.getDescription(),itemEntity.getUnitPrice(),itemEntity.getQtyOnHand()));
+        }
+            return allItems;
     }
 }
