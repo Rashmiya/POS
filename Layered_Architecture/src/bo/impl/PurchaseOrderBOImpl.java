@@ -8,6 +8,9 @@ import dto.CustomerDTO;
 import dto.ItemDTO;
 import dto.OrderDTO;
 import dto.OrderDetailDTO;
+import entity.Item;
+import entity.OrderDetails;
+import entity.Orders;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -31,16 +34,17 @@ public class PurchaseOrderBOImpl implements PurchaseOrderBO {
     JoinQueryDAO joinQueryDAO = (JoinQueryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.JOINQUERYDAO);
 
     @Override
-      public boolean purchaseOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException,ClassNotFoundException{
+      public boolean purchaseOrder(OrderDTO dto) throws SQLException,ClassNotFoundException{
         /*Transaction*/
             Connection connection = DBConnection.getDbConnection().getConnection();
 //            if order id already exist
-            if (orderDAO.exit(orderId)) {
+            if (orderDAO.exit(dto.getOrderId())) {
 
             }
             connection.setAutoCommit(false);
             // Save order
-            boolean save = orderDAO.save(new OrderDTO(orderId, orderDate, customerId));
+            boolean save = orderDAO.save(new Orders(dto.getOrderId(),dto.getOrderDate(),dto.getCustomerId())
+            );
 
             if (!save) {
                 connection.rollback();
@@ -48,8 +52,8 @@ public class PurchaseOrderBOImpl implements PurchaseOrderBO {
                 return false;
             }
             //  Save orderDetails
-            for (OrderDetailDTO detail : orderDetails) {
-                boolean save1 = orderDetailsDAO.save(detail);
+            for (OrderDetailDTO detailsDTO : dto.getOrderDetails()) {
+                boolean save1 = orderDetailsDAO.save(new OrderDetails(detailsDTO.getOid(),detailsDTO.getItemCode(),detailsDTO.getQty(),detailsDTO.getUnitPrice()));
                 if (!save1) {
                     connection.rollback();
                     connection.setAutoCommit(true);
@@ -57,12 +61,12 @@ public class PurchaseOrderBOImpl implements PurchaseOrderBO {
                 }
 
                 //Search & Update Item
-                ItemDTO item = null /*findItem(detail.getItemCode())*/;
-                item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
+                ItemDTO item = searchItem(detailsDTO.getItemCode());
+                item.setQtyOnHand(item.getQtyOnHand() - detailsDTO.getQty());
 
                 //update item
                 System.out.println(item);
-                boolean update = itemDAO.update(item);
+                boolean update = itemDAO.update(new Item(item.getCode(),item.getDescription(),item.getQtyOnHand(),item.getUnitPrice()));
 
                 if (!update) {
                     connection.rollback();
