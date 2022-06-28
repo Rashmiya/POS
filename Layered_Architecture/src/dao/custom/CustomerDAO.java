@@ -10,5 +10,5 @@ import java.util.ArrayList;
 // must extend CrudDAO interface
 
 public interface CustomerDAO extends CrudDAO<Customer,String> {
-    public ArrayList<CustomerDTO> getAllCustomersByAddress(String address);
+    public ArrayList<Customer> getAllCustomersByAddress(String address);
 }
