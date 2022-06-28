@@ -11,12 +11,12 @@ import java.util.ArrayList;
 
 public class OrderDAOImpl implements OrderDAO {
     @Override
-    public boolean save(Orders dto) throws SQLException, ClassNotFoundException {
-       return SQLUtil.executeUpdate("INSERT INTO `Orders` (oid,date,customerID) Values (?,?,?)",dto.getOrderId(),dto.getOrderDate(),dto.getCustomerId());
+    public boolean save(Orders entity) throws SQLException, ClassNotFoundException {
+       return SQLUtil.executeUpdate("INSERT INTO `Orders` (oid,date,customerID) Values (?,?,?)",entity.getOid(),entity.getDate(),entity.getCustomerID());
     }
 
     @Override
-    public boolean update(Orders dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Orders entity) throws SQLException, ClassNotFoundException {
         return false;
     }
 
