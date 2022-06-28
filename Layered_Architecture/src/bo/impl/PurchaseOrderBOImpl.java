@@ -4,10 +4,10 @@ import bo.custom.PurchaseOrderBO;
 import dao.DAOFactory;
 import dao.custom.*;
 import db.DBConnection;
-import model.CustomerDTO;
-import model.ItemDTO;
-import model.OrderDTO;
-import model.OrderDetailDTO;
+import model.dto.CustomerDTO;
+import model.dto.ItemDTO;
+import model.dto.OrderDTO;
+import model.dto.OrderDetailDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;

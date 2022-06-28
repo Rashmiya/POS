@@ -1,7 +1,7 @@
 package dao.impl;
 import dao.SQLUtil;
 import dao.custom.ItemDAO;
-import model.ItemDTO;
+import model.dto.ItemDTO;
 
 import java.sql.*;
 import java.util.ArrayList;

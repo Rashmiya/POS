@@ -2,7 +2,7 @@ package dao.impl;
 
 import dao.SQLUtil;
 import dao.custom.OrderDAO;
-import model.OrderDTO;
+import model.dto.OrderDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

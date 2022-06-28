@@ -1,7 +1,5 @@
 package dao;
 
-import model.OrderDTO;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 

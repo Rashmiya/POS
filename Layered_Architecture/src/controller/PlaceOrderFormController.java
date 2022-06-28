@@ -2,7 +2,6 @@ package controller;
 
 import bo.BOFactory;
 import bo.custom.PurchaseOrderBO;
-import bo.impl.PurchaseOrderBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -18,9 +17,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.CustomerDTO;
-import model.ItemDTO;
-import model.OrderDetailDTO;
+import model.dto.CustomerDTO;
+import model.dto.ItemDTO;
+import model.dto.OrderDetailDTO;
 import view.tdm.OrderDetailTM;
 
 import java.io.IOException;
@@ -58,7 +57,7 @@ import java.util.stream.Collectors;
     private String orderId;
 //    Dependency Injection - property Injection
 /*    PurchaseOrderBO purchaseOrderBO = new PurchaseOrderBOImpl();*/
-    PurchaseOrderBO purchaseOrderBO = (PurchaseOrderBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PURCHASEORDER);
+    PurchaseOrderBO purchaseOrderBO = (PurchaseOrderBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PURCHASE_ORDER);
 
     public void initialize(){
         tblOrderDetails.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));

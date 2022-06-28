@@ -1,7 +1,7 @@
 package dao.custom;
 
 import dao.CrudDAO;
-import model.CustomerDTO;
+import model.dto.CustomerDTO;
 
 import java.util.ArrayList;
 
