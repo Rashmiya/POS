@@ -1,9 +1,7 @@
 package lk.ijse.pos.dao;
+import lk.ijse.pos.dao.impl.*;
 
 // eka object ekk hadala reuse kireema
-
-import dao.impl.*;
-import lk.ijse.pos.dao.impl.*;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
